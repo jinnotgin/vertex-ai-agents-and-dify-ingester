@@ -1,10 +1,10 @@
 import "dotenv/config";
-import { processAllPages } from "#lib/confluence-dataProcessing.js";
+import { processAllPagesAndAttachments } from "#lib/confluence-dataProcessing.js";
 // import { uploadFolderToGCS, refreshVertexDataStore } from "./gcp-api.js";
 
 console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-await processAllPages();
+await processAllPagesAndAttachments();
 
 // if ((await initiateJiraSession()) === false) {
 // 	console.error("Unable to intiate Jira session.");
