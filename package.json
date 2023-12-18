@@ -1,6 +1,6 @@
 {
 	"type": "module",
-	"name": "confluence-cloud-scraper",
+	"name": "confluence-to-google-vertex-ai-search-ingester",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -13,7 +13,6 @@
 		"#*": "./*"
 	},
 	"dependencies": {
-		"@google-cloud/functions-framework": "^3.3.0",
 		"@google-cloud/storage": "^7.7.0",
 		"dotenv": "^16.3.1",
 		"google-auth-library": "^9.4.1",
