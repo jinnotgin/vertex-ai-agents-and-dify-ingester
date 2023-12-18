@@ -7,7 +7,7 @@ Vertex AI Search is a Retrieval Augment Generation (RAG) solution from Google Cl
 -  semantic search of unstructured data, and
 - a generative answer snippet (like a chatbot) via the use of Large Language Models (LLM).
 
-For more information on what is RAG and its associated with Generative AI, refer to this video here: https://www.youtube.com/watch?v=klTvEwg3oJ4
+For more information on what is RAG and its association with Generative AI, refer to this video here: https://www.youtube.com/watch?v=klTvEwg3oJ4
 
 Using this script, you can automate the process of "syncing" the RAG search, by:
 1. Crawling through Confluence for pages & attachments.
