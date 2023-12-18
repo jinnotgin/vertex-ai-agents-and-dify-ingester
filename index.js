@@ -10,7 +10,7 @@ import { uploadFolderToGCS, refreshVertexDataStore } from "#lib/gcp-api.js";
 import { loadSecrets } from "#lib/utils.js";
 const { VERTEX_DATA_STORES } = await loadSecrets();
 
-async function main() {
+export async function main() {
 	const vertexDataStoresIds = Object.keys(VERTEX_DATA_STORES);
 
 	const tasks = [];
@@ -45,7 +45,7 @@ async function main() {
 		tasks.push(task);
 	}
 
-	await Promise.all(tasks);
+	return await Promise.all(tasks);
 }
 
 await main();
