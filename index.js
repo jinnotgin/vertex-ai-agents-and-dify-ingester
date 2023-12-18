@@ -5,10 +5,10 @@ import {
 	crawlPages,
 } from "#lib/confluence-dataProcessing.js";
 import { crawlTargets } from "#config.js";
-import { VERTEX_DATA_STORES } from "#secrets.js";
 import { uploadFolderToGCS, refreshVertexDataStore } from "#lib/gcp-api.js";
 
-console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+import { loadSecrets } from "#lib/utils.js";
+const { VERTEX_DATA_STORES } = await loadSecrets();
 
 async function main() {
 	const vertexDataStoresIds = Object.keys(VERTEX_DATA_STORES);
