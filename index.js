@@ -47,5 +47,3 @@ export async function main() {
 
 	return await Promise.all(tasks);
 }
-
-await main();
