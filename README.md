@@ -1,7 +1,7 @@
 
 # confluence-to-google-vertex-ai-search-ingester
  
-This helps to sync / ingest documents from [Confluence Cloud](https://support.atlassian.com/confluence-cloud/docs/what-is-confluence-cloud/) into [Google Vertex AI Search & Conversation](https://cloud.google.com/vertex-ai-search-and-conversation?hl=en).  
+This helps to sync / ingest documents from [Confluence Cloud](https://support.atlassian.com/confluence-cloud/docs/what-is-confluence-cloud/) into [Google Vertex AI Search and Conversation](https://cloud.google.com/vertex-ai-search-and-conversation?hl=en).  
 
 Vertex AI Search is a Retrieval Augment Generation (RAG) solution from Google Cloud Platform, which enables:
 -  semantic search of unstructured data, and
