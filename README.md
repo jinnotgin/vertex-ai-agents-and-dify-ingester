@@ -41,7 +41,7 @@ There are 3 types of crawling:
 You can see all three below being configured in `config.js` , as shown below:
 
 ```js
-export  const  crawlTargets  = {
+export const crawlTargets  = {
 	everything: {
 		type: "all",
 	},
