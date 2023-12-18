@@ -34,9 +34,9 @@ If you are intending to implement this inside Google Cloud Functions, please tak
 # Config: Setting up what to crawl
 
 There are 3 types of crawling:
-	1. `all`: Crawls all current pages & attachments across all Spaces in Confluence
-	2. `spaces`: Crawls for pages & attachments in specific spaces, as defined using the space's key.
-	3. `pages`: Crawl specific pages and its attachments, as defined using the the page's id.
+1. `all`: Crawls all current pages & attachments across all Spaces in Confluence
+2. `spaces`: Crawls for pages & attachments in specific spaces, as defined using the space's key.
+3. `pages`: Crawl specific pages and its attachments, as defined using the the page's id.
 
 You can see all three below being configured in `config.js` , as shown below:
 
