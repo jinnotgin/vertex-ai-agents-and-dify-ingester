@@ -4,7 +4,7 @@ export const ATLASSIAN_ACCOUNT_API_TOKEN = "";
 
 export const GCP_PROJECT_ID = "";
 export const GCS_BUCKET_NAME = "";
-export const VERTEX_DATA_STORE_IDS = {
+export const VERTEX_DATA_STORES = {
 	// ... (in the sample config.js given, there will be 3 crawlTargets keys: "all", "hrCorner" and "officeReopening")
 	all: "<VERTEX SEARCH DATA STORE ID>",
 	hrCorner: "<VERTEX SEARCH DATA STORE ID>",

@@ -1,7 +1,7 @@
 export const crawlTargets = {
-	all: {
-		type: "all",
-	},
+	// all: {
+	// 	type: "all",
+	// },
 	hrCorner: {
 		type: "spaces",
 		items: ["UFCompHR", "UFUserGuide"],
