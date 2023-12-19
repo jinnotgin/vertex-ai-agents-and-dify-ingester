@@ -1,5 +1,5 @@
 export const crawlTargets = {
-	// all: {
+	// everything: {
 	// 	type: "all",
 	// },
 	hrCorner: {
