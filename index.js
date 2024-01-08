@@ -16,7 +16,7 @@ export async function main() {
 	const tasks = [];
 
 	for (let [functionName, data] of Object.entries(crawlTargets)) {
-		const { type, items } = data;
+		const { type, items, options } = data;
 
 		let task = (async () => {
 			switch (type) {
@@ -27,7 +27,8 @@ export async function main() {
 					await crawlSpaces(functionName, items);
 					break;
 				case "pages":
-					await crawlPages(functionName, items);
+					const { includeChildPages = false } = options;
+					await crawlPages(functionName, items, includeChildPages);
 					break;
 				default:
 					break;
