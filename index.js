@@ -27,8 +27,13 @@ export async function main() {
 					await crawlSpaces(functionName, items);
 					break;
 				case "pages":
-					const { includeChildPages = false } = options;
-					await crawlPages(functionName, items, includeChildPages);
+					const { includeChildPages = false, excludePages = [] } = options;
+					await crawlPages(
+						functionName,
+						items,
+						includeChildPages,
+						excludePages
+					);
 					break;
 				default:
 					break;

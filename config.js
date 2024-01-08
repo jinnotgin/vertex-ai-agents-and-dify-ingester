@@ -15,6 +15,7 @@ export const crawlTargets = {
 		items: ["189399183"],
 		options: {
 			includeChildPages: true,
+			excludePages: ["189399183"],
 		},
 	},
 };
