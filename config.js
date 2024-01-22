@@ -12,10 +12,10 @@ export const crawlTargets = {
 	// },
 	officeReopening: {
 		type: "pages",
-		items: ["189399183"],
+		items: ["189399183", "196640771"],
 		options: {
 			includeChildPages: true,
-			excludePages: ["189399183"],
+			excludePages: [""],
 		},
 	},
 };
