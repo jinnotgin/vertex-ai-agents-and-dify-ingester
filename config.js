@@ -1,4 +1,5 @@
 export const crawlTargets = {
+	// old format
 	// everything: {
 	// 	type: "all",
 	// },
@@ -8,14 +9,29 @@ export const crawlTargets = {
 	// },
 	// officeReopening: {
 	// 	type: "pages",
-	// 	items: ["131104849", "138608993", "133333308"],
+	// 	items: ["189399183", "196640771"],
+	// 	options: {
+	// 		includeChildPages: true,
+	// 		excludePages: [""],
+	// 	},
 	// },
-	officeReopening: {
-		type: "pages",
-		items: ["189399183", "196640771"],
-		options: {
-			includeChildPages: true,
-			excludePages: [""],
+	//
+	// new format
+	slsUatSupport: [
+		{
+			source: "confluence-cloud",
+			settings: {
+				type: "pages",
+				items: ["47939637"],
+				options: {
+					includeChildPages: true,
+					excludePages: [""],
+				},
+			},
 		},
-	},
+		{
+			source: "jira-cloud",
+			settings: {},
+		},
+	],
 };
