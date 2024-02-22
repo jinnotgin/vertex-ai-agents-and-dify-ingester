@@ -1,7 +1,7 @@
 
-# confluence-to-google-vertex-ai-search-ingester
+# google-vertex-ai-search-ingester
  
-This helps to sync / ingest documents from [Confluence Cloud](https://support.atlassian.com/confluence-cloud/docs/what-is-confluence-cloud/) into [Google Vertex AI Search and Conversation](https://cloud.google.com/vertex-ai-search-and-conversation?hl=en).  
+This helps to sync / ingest documents from [Confluence Cloud](https://support.atlassian.com/confluence-cloud/docs/what-is-confluence-cloud/), [Jira Cloud](https://www.atlassian.com/software/jira/guides/getting-started/introduction#what-is-jira-software) & [Zephyr Squad](https://smartbear.com/test-management/zephyr-squad/) to [Google Vertex AI Search and Conversation](https://cloud.google.com/vertex-ai-search-and-conversation?hl=en).  
 
 Vertex AI Search is a Retrieval Augment Generation (RAG) solution from Google Cloud Platform, which enables:
 -  semantic search of unstructured data, and
@@ -33,27 +33,82 @@ If you are intending to implement this inside Google Cloud Functions, please tak
 
 # Config: Setting up what to crawl
 
-There are 3 types of crawling:
+For Confluence Cloud, there are 3 types of crawling:
 1. `all`: Crawls all current pages & attachments across all Spaces in Confluence
 2. `spaces`: Crawls for pages & attachments in specific spaces, as defined using the space's key.
-3. `pages`: Crawl specific pages and its attachments, as defined using the the page's id.
+3. `pages`: Crawl specific pages and its attachments, as defined using the the page's id. You can also configure to `includeChildPages` (default: False) and `excludePages` (default: [], an empty array) in the options.
+
+For Jira Cloud, there is only 1 type of crawling:
+1. `jql`: Crawls all Jira stories that matches any of JQL queries (you can define more than 1!). You can also configure to `includeComments` (default: False) and `includeZephyrTestSteps` (default: False) in the options.
 
 You can see all three below being configured in `config.js` , as shown below:
 
 ```js
 export const crawlTargets  = {
-	everything: {
-		type: "all",
-	},
-	hrCorner: {
-		type:  "spaces",
-		items: ["UFCompHR", "UFUserGuide"],
-	},
-	newBenefits: {
-		type:  "pages",
-		items: ["131104849", "138608993", "133333308"],
-	},
+	everything: [
+		{
+			source: "confluence-cloud",
+			settings: {
+				type: "all",
+			},
+		},
+	],
+	hrCorner: [
+		{
+			source: "confluence-cloud",
+			settings: {
+				type:  "spaces",
+				items: ["UFCompHR", "UFUserGuide"],
+			},
+		},
+	],
+	newBenefits: [
+		{
+			source: "confluence-cloud",
+			settings: {
+				type:  "pages",
+				items: ["131104849", "138608993", "133333308"],
+			 	options: {
+			 		includeChildPages: true,
+			 		excludePages: ["12446713"],
+			 	},
+			},
+		},
+	],
+	userSupport: [
+		{
+			source: "confluence-cloud",
+			settings: {
+				type:  "pages",
+				items: ["137211523"],
+			},
+		},
+		{
+			source: "jira-cloud",
+			settings: {
+				type: "jql",
+				items: [
+					"project = PROJECTKEY AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
+				],
+				options: {
+					includeZephyrTestSteps: false,
+					includeComments: true,
+				},
+			},
+		},
+		{
+			source: "jira-cloud",
+			settings: {
+				type: "jql",
+				items: ["issuekey in(PRJTEST-22494, PRJTEST-18207, PRJTEST-18208)"],
+				options: {
+					includeZephyrTestSteps: true,
+					includeComments: true,
+				},
+			},
+		},
+	],
 };
 ```
 
-The names used above (i.e `everything`, `hrCorner` and `newBenefits`) will become the folder names inside Google Cloud Storage for each type of crawling activity. Hence, its important that use names that are unique and don't conflict with one another.
+The names used above (i.e `everything`, `hrCorner`, `newBenefits`, `userSupport`) will become the folder names inside Google Cloud Storage for each type of crawling activity. Hence, its important that use names that are unique and don't conflict with one another.
