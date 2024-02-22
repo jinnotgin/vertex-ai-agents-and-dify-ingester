@@ -87,11 +87,9 @@ export const crawlTargets  = {
       source: "jira-cloud",
       settings: {
         type: "jql",
-        items: [
-          "project = PROJECTKEY AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
-        ],
+        items: ["issuekey in(PRJTEST-22494, PRJTEST-18207, PRJTEST-18208)"],
         options: {
-          includeZephyrTestSteps: false,
+          includeZephyrTestSteps: true,
           includeComments: true,
         },
       },
@@ -100,11 +98,9 @@ export const crawlTargets  = {
       source: "jira-cloud",
       settings: {
         type: "jql",
-        items: ["issuekey in(PRJTEST-22494, PRJTEST-18207, PRJTEST-18208)"],
-        options: {
-          includeZephyrTestSteps: true,
-          includeComments: true,
-        },
+        items: [
+          "project = PROJECTKEY AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
+        ],
       },
     },
   ],
