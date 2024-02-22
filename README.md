@@ -41,7 +41,7 @@ For Confluence Cloud, there are 3 types of crawling:
 For Jira Cloud, there is only 1 type of crawling:
 1. `jql`: Crawls all Jira stories that matches any of JQL queries (you can define more than 1!). You can also configure to `includeComments` (default: False) and `includeZephyrTestSteps` (default: False) in the options.
 
-You can see all three below being configured in `config.js` , as shown below:
+You can see all below being configured in `config.js` , as shown below:
 
 ```js
 export const crawlTargets  = {
