@@ -45,69 +45,70 @@ You can see all three below being configured in `config.js` , as shown below:
 
 ```js
 export const crawlTargets  = {
-	everything: [
-		{
-			source: "confluence-cloud",
-			settings: {
-				type: "all",
-			},
-		},
-	],
-	hrCorner: [
-		{
-			source: "confluence-cloud",
-			settings: {
-				type:  "spaces",
-				items: ["UFCompHR", "UFUserGuide"],
-			},
-		},
-	],
-	newBenefits: [
-		{
-			source: "confluence-cloud",
-			settings: {
-				type:  "pages",
-				items: ["131104849", "138608993", "133333308"],
-			 	options: {
-			 		includeChildPages: true,
-			 		excludePages: ["12446713"],
-			 	},
-			},
-		},
-	],
-	userSupport: [
-		{
-			source: "confluence-cloud",
-			settings: {
-				type:  "pages",
-				items: ["137211523"],
-			},
-		},
-		{
-			source: "jira-cloud",
-			settings: {
-				type: "jql",
-				items: [
-					"project = PROJECTKEY AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
-				],
-				options: {
-					includeZephyrTestSteps: false,
-					includeComments: true,
-				},
-			},
-		},
-		{
-			source: "jira-cloud",
-			settings: {
-				type: "jql",
-				items: ["issuekey in(PRJTEST-22494, PRJTEST-18207, PRJTEST-18208)"],
-				options: {
-					includeZephyrTestSteps: true,
-					includeComments: true,
-				},
-			},
-		},
-	],
+export const crawlTargets  = {
+  everything: [
+    {
+      source: "confluence-cloud",
+      settings: {
+        type: "all",
+      },
+    },
+  ],
+  hrCorner: [
+    {
+      source: "confluence-cloud",
+      settings: {
+        type:  "spaces",
+        items: ["UFCompHR", "UFUserGuide"],
+      },
+    },
+  ],
+  newBenefits: [
+    {
+      source: "confluence-cloud",
+      settings: {
+        type:  "pages",
+        items: ["131104849", "138608993", "133333308"],
+         options: {
+           includeChildPages: true,
+           excludePages: ["12446713"],
+         },
+      },
+    },
+  ],
+  userSupport: [
+    {
+      source: "confluence-cloud",
+      settings: {
+        type:  "pages",
+        items: ["137211523"],
+      },
+    },
+    {
+      source: "jira-cloud",
+      settings: {
+        type: "jql",
+        items: [
+          "project = PROJECTKEY AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
+        ],
+        options: {
+          includeZephyrTestSteps: false,
+          includeComments: true,
+        },
+      },
+    },
+    {
+      source: "jira-cloud",
+      settings: {
+        type: "jql",
+        items: ["issuekey in(PRJTEST-22494, PRJTEST-18207, PRJTEST-18208)"],
+        options: {
+          includeZephyrTestSteps: true,
+          includeComments: true,
+        },
+      },
+    },
+  ],
 };
 ```
 
