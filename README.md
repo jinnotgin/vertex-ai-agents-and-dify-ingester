@@ -45,7 +45,6 @@ You can see all three below being configured in `config.js` , as shown below:
 
 ```js
 export const crawlTargets  = {
-export const crawlTargets  = {
   everything: [
     {
       source: "confluence-cloud",
