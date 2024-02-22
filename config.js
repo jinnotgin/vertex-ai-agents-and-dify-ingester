@@ -31,7 +31,35 @@ export const crawlTargets = {
 		},
 		{
 			source: "jira-cloud",
-			settings: {},
+			settings: {
+				type: "jql",
+				items: ["issuekey in(SLSTEST-22494, SLSTEST-18207, SLSTEST-18208)"],
+				options: {
+					includeZephyrTestSteps: true,
+					includeComments: true,
+				},
+			},
 		},
 	],
+	// betaSLSGuru: [
+	// 	{
+	// 		source: "jira-cloud",
+	// 		settings: {
+	// 			type: "jql",
+	// 			items: [
+	// 				"project = SLS AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
+	// 			],
+	// 			options: {
+	// 				includeZephyrTestSteps: false,
+	// 				includeComments: true,
+	// 			},
+	// 		},
+	// 	},
+	// 	{
+	// 		source: "jira-cloud",
+	// 		settings: {
+	// 			type: "epic-issue-summary-SLS",
+	// 		},
+	// 	},
+	// ],
 };
