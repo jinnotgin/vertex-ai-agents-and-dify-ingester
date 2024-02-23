@@ -41,25 +41,36 @@ export const crawlTargets = {
 			},
 		},
 	],
-	// betaSLSGuru: [
-	// 	{
-	// 		source: "jira-cloud",
-	// 		settings: {
-	// 			type: "jql",
-	// 			items: [
-	// 				"project = SLS AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
-	// 			],
-	// 			options: {
-	// 				includeZephyrTestSteps: false,
-	// 				includeComments: true,
-	// 			},
-	// 		},
-	// 	},
-	// 	{
-	// 		source: "jira-cloud",
-	// 		settings: {
-	// 			type: "epic-issue-summary-SLS",
-	// 		},
-	// 	},
-	// ],
+	betaSLSGuru: [
+		{
+			source: "jira-cloud",
+			settings: {
+				type: "jql",
+				items: [
+					"project = SLS AND issuetype in (Story, Task, Sub-task) AND status = Done AND description is not EMPTY ORDER BY updated DESC",
+				],
+				options: {
+					includeZephyrTestSteps: false,
+					includeComments: true,
+				},
+			},
+		},
+		{
+			source: "jira-cloud",
+			settings: {
+				type: "epic-issue-summary-SLS",
+			},
+		},
+		{
+			source: "confluence-cloud",
+			settings: {
+				type: "pages",
+				items: ["4326533", "4326863"],
+				options: {
+					includeChildPages: true,
+					excludePages: ["4326533", "4326863"],
+				},
+			},
+		},
+	],
 };
