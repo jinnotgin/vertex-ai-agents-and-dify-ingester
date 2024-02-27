@@ -10,7 +10,7 @@ Vertex AI Search is a Retrieval Augment Generation (RAG) solution from Google Cl
 For more information on what is RAG and its association with Generative AI, refer to this video here: https://www.youtube.com/watch?v=klTvEwg3oJ4
 
 Using this script, you can automate the process of "syncing" the RAG search, by:
-1. Crawling through Confluence for pages & attachments.
+1. Crawling content inside Confluence / Jira.
 2. Uploading the information & metadata to a Google Cloud Storage.
 3. Triggering a refresh (purge + import) of the Vertex Data Store
 
