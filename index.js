@@ -8,6 +8,9 @@ import {
 	crawlJql as jira_crawlJql,
 	crawlEpicIssueSummary_SLS as jira_crawlEpicIssueSummary_SLS,
 } from "#lib/jira-dataProcessing.js";
+import {
+	crawlUrl as web_crawlUrl,
+} from "#lib/web-dataProcessing.js";
 import { crawlTargets } from "#config.js";
 import { uploadFolderToGCS, refreshVertexDataStore } from "#lib/gcp-api.js";
 import { clearDataDirectory } from "#lib/diskio.js";
@@ -78,6 +81,26 @@ export async function main() {
 								default:
 									break;
 							}
+						}
+						case "web": {
+							const { type, items, options } = settings;
+							switch (type) {
+								case "url":
+									const { includeLinks = false, regex, depth = 1 } = options;
+									for (const url of items) {
+										await web_crawlUrl(
+											crawlTargetName,
+											url,
+											includeLinks,
+											new RegExp(regex),
+											depth
+										);
+									}
+									break;
+								default:
+									break;
+							}
+							break; // Add break to prevent fallthrough
 						}
 						default:
 							break;
