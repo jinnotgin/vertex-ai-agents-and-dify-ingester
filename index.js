@@ -1,4 +1,5 @@
 import "dotenv/config";
+import logger from "#lib/logger.js";
 import {
 	crawlAll as confluence_crawlAll,
 	crawlSpaces as confluence_crawlSpaces,
@@ -8,29 +9,31 @@ import {
 	crawlJql as jira_crawlJql,
 	crawlEpicIssueSummary_SLS as jira_crawlEpicIssueSummary_SLS,
 } from "#lib/jira-dataProcessing.js";
-import {
-	crawlUrl as web_crawlUrl,
-} from "#lib/web-dataProcessing.js";
+import { crawlUrl as web_crawlUrl } from "#lib/web-dataProcessing.js";
 import { crawlTargets } from "#config.js";
 import { uploadFolderToGCS, refreshVertexDataStore } from "#lib/gcp-api.js";
+import { difyPurgeDataStore, uploadFolderToDify } from "#lib/dify-api.js";
 import { clearDataDirectory } from "#lib/diskio.js";
-
 import { loadSecrets } from "#lib/utils.js";
-const { VERTEX_DATA_STORES } = await loadSecrets();
+import { convertMetadataToSqlite } from "#lib/ndjson-to-sqlite.js";
+
+const { VERTEX_DATA_STORES, DIFY_DATASET_IDS } = await loadSecrets();
 
 export async function main() {
 	const vertexDataStoresIds = Object.keys(VERTEX_DATA_STORES);
+	const difyDatasetIds = Object.keys(DIFY_DATASET_IDS);
 
 	const tasks = [];
 
-	for (let [crawlTargetName, targetGroup] of Object.entries(crawlTargets)) {
+	for (let [crawlTargetName, targetConfig] of Object.entries(crawlTargets)) {
+		const { uploadDestination, targets } = targetConfig;
 		clearDataDirectory(crawlTargetName);
 
-		// Create a task for each crawlTarget to manage its targetGroup, upload, and refresh operations
+		// Create a task for each crawlTarget to manage its targets, upload, and refresh operations
 		let task = (async () => {
-			const subTasks = []; // To store promises of each target's (in targetGroup) operations
+			const subTasks = []; // To store promises of each target's (in targets) operations
 
-			for (let target of targetGroup) {
+			for (let target of targets) {
 				const { source, settings } = target;
 				// Create a sub-task for each target
 				let subTask = (async () => {
@@ -57,6 +60,7 @@ export async function main() {
 								default:
 									break;
 							}
+							break;
 						}
 						case "jira-cloud": {
 							const { type, items, options } = settings;
@@ -81,6 +85,7 @@ export async function main() {
 								default:
 									break;
 							}
+							break;
 						}
 						case "web": {
 							const { type, items, options } = settings;
@@ -113,18 +118,34 @@ export async function main() {
 			await Promise.all(subTasks);
 
 			// After the entire targetGroup is processed, proceed with upload and refresh
-			await uploadFolderToGCS(crawlTargetName);
+			if (uploadDestination === "gcp") {
+				await uploadFolderToGCS(crawlTargetName);
 
-			if (vertexDataStoresIds.includes(crawlTargetName)) {
-				await refreshVertexDataStore(
-					VERTEX_DATA_STORES[crawlTargetName],
-					crawlTargetName
-				);
+				if (vertexDataStoresIds.includes(crawlTargetName)) {
+					await refreshVertexDataStore(
+						VERTEX_DATA_STORES[crawlTargetName],
+						crawlTargetName
+					);
+				}
+			} else if (uploadDestination === "dify") {
+				// prepare a sqlite file for ndjson data
+				await convertMetadataToSqlite(crawlTargetName);
+
+				if (difyDatasetIds.includes(crawlTargetName)) {
+					await difyPurgeDataStore(DIFY_DATASET_IDS[crawlTargetName]);
+					await uploadFolderToDify(
+						DIFY_DATASET_IDS[crawlTargetName],
+						crawlTargetName
+					);
+				}
 			}
 		})();
 
 		tasks.push(task);
 	}
 
-	return await Promise.all(tasks);
+	const allTasksCompleted = await Promise.all(tasks);
+	logger.info("All tasks completed. Function will end now.");
+
+	return allTasksCompleted;
 }

@@ -14,10 +14,15 @@
 	},
 	"dependencies": {
 		"@google-cloud/storage": "^7.7.0",
+		"axios": "^1.7.2",
 		"crypto-js": "^4.2.0",
 		"dotenv": "^16.3.1",
+		"form-data": "^4.0.0",
 		"google-auth-library": "^9.4.1",
 		"jsdom": "^24.1.0",
+		"ndjson": "^2.0.0",
+		"sqlite": "^5.1.1",
+		"sqlite3": "^5.1.7",
 		"winston": "^3.11.0"
 	}
 }
