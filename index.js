@@ -40,21 +40,24 @@ export async function main() {
 					switch (source) {
 						case "confluence-cloud": {
 							const { type, items, options } = settings;
+							const { bannedAttachmentPatterns = [] } =
+							options || {};
 							switch (type) {
 								case "all":
-									await confluence_crawlAll(crawlTargetName);
+									await confluence_crawlAll(crawlTargetName, bannedAttachmentPatterns);
 									break;
 								case "spaces":
-									await confluence_crawlSpaces(crawlTargetName, items);
+									await confluence_crawlSpaces(crawlTargetName, items, bannedAttachmentPatterns);
 									break;
 								case "pages":
 									const { includeChildPages = false, excludePages = [] } =
-										options;
+										options || {};
 									await confluence_crawlPages(
 										crawlTargetName,
 										items,
 										includeChildPages,
-										excludePages
+										excludePages,
+										bannedAttachmentPatterns,
 									);
 									break;
 								default:
@@ -91,13 +94,15 @@ export async function main() {
 							const { type, items, options } = settings;
 							switch (type) {
 								case "url":
-									const { includeLinks = false, regex, depth = 1 } = options;
+									const { includeLinks = false, regex, bannedUrlPatterns = [], bannedTitlePatterns = [], depth = 1 } = options || {};
 									for (const url of items) {
 										await web_crawlUrl(
 											crawlTargetName,
 											url,
 											includeLinks,
 											new RegExp(regex),
+											bannedUrlPatterns.map(pattern => new RegExp(pattern)),
+											bannedTitlePatterns.map(pattern => new RegExp(pattern)),
 											depth
 										);
 									}
@@ -149,3 +154,15 @@ export async function main() {
 
 	return allTasksCompleted;
 }
+
+// HTTP Handler function for Cloud Function
+export async function httpHandler(req, res) {
+  try {
+    await main();
+    res.status(200).send("All tasks completed successfully.");
+  } catch (error) {
+    logger.error("An error occurred:", error);
+    res.status(500).send("An error occurred while processing the tasks.");
+  }
+}
+
