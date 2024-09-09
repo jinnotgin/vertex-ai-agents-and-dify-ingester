@@ -1,34 +1,4 @@
 export const crawlTargets = {
-	// slsUatSupport: {
-	// 	uploadDestination: "dify", // "gcp" or "dify"
-	// 	targets: [
-	// 		{
-	// 			source: "confluence-cloud",
-	// 			settings: {
-	// 				type: "pages",
-	// 				items: ["48005191"],
-	// 				options: {
-	// 					includeChildPages: true,
-	// 					excludePages: [""],
-	// 				},
-	// 			},
-	// 		},
-	// 		{
-	// 			source: "jira-cloud",
-	// 			settings: {
-	// 				type: "jql",
-	// 				items: [
-	// 					`project = SLSTEST AND issuetype = Test AND summary ~ UAT AND fixVersion = 2P1AS2`,
-	// 					// `project = SLSTEST AND summary ~ "\"[UAT]\"" AND issuetype = Test AND fixVersion = 2P1AS2`,
-	// 				],
-	// 				options: {
-	// 					includeZephyrTestSteps: false,
-	// 					includeComments: false,
-	// 				},
-	// 			},
-	// 		},
-	// 	],
-	// },
 	slsGuru: {
 		uploadDestination: "dify", // "gcp" or "dify"
 		targets: [
@@ -65,4 +35,34 @@ export const crawlTargets = {
 			},
 		],
 	},
+	// slsUatSupport: {
+	// 	uploadDestination: "dify", // "gcp" or "dify"
+	// 	targets: [
+	// 		{
+	// 			source: "confluence-cloud",
+	// 			settings: {
+	// 				type: "pages",
+	// 				items: ["48005191"],
+	// 				options: {
+	// 					includeChildPages: true,
+	// 					excludePages: [""],
+	// 				},
+	// 			},
+	// 		},
+	// 		{
+	// 			source: "jira-cloud",
+	// 			settings: {
+	// 				type: "jql",
+	// 				items: [
+	// 					`project = SLSTEST AND issuetype = Test AND summary ~ UAT AND fixVersion = 2P1AS2`,
+	// 					// `project = SLSTEST AND summary ~ "\"[UAT]\"" AND issuetype = Test AND fixVersion = 2P1AS2`,
+	// 				],
+	// 				options: {
+	// 					includeZephyrTestSteps: false,
+	// 					includeComments: false,
+	// 				},
+	// 			},
+	// 		},
+	// 	],
+	// },
 };
