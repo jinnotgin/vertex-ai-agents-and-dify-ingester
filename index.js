@@ -14,7 +14,7 @@ import { crawlTargets } from "#config.js";
 import { uploadFolderToGCS, refreshVertexDataStore } from "#lib/gcp-api.js";
 import { difyPurgeDataStore, uploadFolderToDify } from "#lib/dify-api.js";
 import { clearDataDirectory } from "#lib/diskio.js";
-import { loadSecrets } from "#lib/utils.js";
+import { loadSecrets, sleep } from "#lib/utils.js";
 import { convertMetadataToSqlite } from "#lib/ndjson-to-sqlite.js";
 
 const { VERTEX_DATA_STORES, DIFY_DATASET_IDS } = await loadSecrets();
@@ -138,6 +138,8 @@ export async function main() {
 
 				if (difyDatasetIds.includes(crawlTargetName)) {
 					await difyPurgeDataStore(DIFY_DATASET_IDS[crawlTargetName]);
+
+					await sleep(5000); 
 					await uploadFolderToDify(
 						DIFY_DATASET_IDS[crawlTargetName],
 						crawlTargetName
