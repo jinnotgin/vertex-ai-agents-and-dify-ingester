@@ -139,7 +139,8 @@ export async function main() {
 				if (difyDatasetIds.includes(crawlTargetName)) {
 					await difyPurgeDataStore(DIFY_DATASET_IDS[crawlTargetName]);
 
-					await sleep(5000); 
+					logger.info("Waiting for 3 seconds after purging call.");
+					await sleep(3 * 1000); 
 					await uploadFolderToDify(
 						DIFY_DATASET_IDS[crawlTargetName],
 						crawlTargetName
